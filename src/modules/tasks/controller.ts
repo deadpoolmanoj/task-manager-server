@@ -36,8 +36,11 @@ export const editTask = async (req: any, res: Response) => {
 
 export const deleteTask = async (req: Request, res: Response) => {
     try {
-        const reqTask = req.body as Task
-        await deleteExistingTask(reqTask)
+        const taskIdStr = req.query.taskId
+        console.log(taskIdStr);
+        
+        const taskId = Number(taskIdStr)
+        await deleteExistingTask(taskId)
         return res.status(HTTP_STATUS.OK).json(success({}, "Task Deleted Successfully"))
     } catch (err: any) {
         return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(failure(err.message))

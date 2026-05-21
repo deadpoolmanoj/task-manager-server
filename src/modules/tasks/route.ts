@@ -29,6 +29,8 @@ const router = Router();
  *   get:
  *     summary: Get all tasks for a user
  *     tags: [Tasks]
+ *     security:
+ *       - bearerAuth: []        # ← add this
  *     parameters:
  *       - in: query
  *         name: userId
@@ -38,21 +40,8 @@ const router = Router();
  *     responses:
  *       200:
  *         description: List of tasks
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                   example: true
- *                 message:
- *                   type: string
- *                   example: Success
- *                 data:
- *                   type: array
- *                   items:
- *                     $ref: '#/components/schemas/Task'
+ *       401:
+ *         description: Unauthorized
  *       500:
  *         description: Server error
  */
@@ -64,12 +53,6 @@ router.get('/', getTasks)
  *   post:
  *     summary: Add a new task
  *     tags: [Tasks]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
  *     requestBody:
  *       required: true
  *       content:
@@ -117,8 +100,8 @@ router.put('/:id', validate(taskSchema), editTask)
  *     summary: Delete a task
  *     tags: [Tasks]
  *     parameters:
- *       - in: path
- *         name: id
+ *       - in: query
+ *         name: taskId
  *         required: true
  *         schema:
  *           type: string

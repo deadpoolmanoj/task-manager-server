@@ -17,12 +17,15 @@
  *       type: object
  *       required: [text, userId]
  *       properties:
+ *         id: 
+ *           type: number
+ *           example: 0
  *         text:
  *           type: string
  *           example: Buy groceries
  *         userId:
- *           type: string
- *           example: "123"
+ *           type: number
+ *           example: 44
  *         description:
  *           type: string
  *           example: From the supermarket
