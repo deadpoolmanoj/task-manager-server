@@ -10,6 +10,7 @@ import dotenv from 'dotenv'
 import { rateLimiter } from './middlewares/roleRateLimiter'
 import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from "./config/swagger";
+import cookieParser from 'cookie-parser'
 
 dotenv.config()
 
@@ -25,6 +26,8 @@ app.use(
 );
 
 app.use(express.json());
+
+app.use(cookieParser());
 
 app.use(rateLimiter) // requests set 100 per 15 mins
 

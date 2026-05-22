@@ -49,6 +49,18 @@ export const verifyCredentials = async (user: User) => {
     return existingUser as User;
 }
 
+export const getUserById = async (id: number) => {
+    const { data: user, error } = await supabase
+        .from('User')
+        .select('id, role, email')
+        .eq('id', id)
+        .single()
+
+    if (error || !user) throw new Error("User not found")
+
+    return user as User
+}
+
 export const generateToken = (user: User) => {
     return jwt.sign(
         {
@@ -58,5 +70,13 @@ export const generateToken = (user: User) => {
         },
         process.env.JWT_SECRET!,
         { expiresIn: '7d' }
+    )
+}
+
+export const generateRefreshToken = (user: User) => {
+    return jwt.sign(
+        { id: user.id },
+        process.env.JWT_REFRESH_SECRET!,
+        { expiresIn: '30d' }
     )
 }
