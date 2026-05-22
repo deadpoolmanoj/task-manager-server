@@ -6,7 +6,7 @@ import { Task } from "../../shared/types/task";
 
 export const getTasks = async (req: any, res: Response) => {
     try {
-        const userId = req.query.userId
+        const userId = req.user.id
         const data = await fetchAllTasks(userId)
         return res.status(HTTP_STATUS.OK).json(success(data));
     } catch (err: any) {
@@ -16,33 +16,40 @@ export const getTasks = async (req: any, res: Response) => {
 
 export const addTask = async (req: any, res: Response) => {
     try {
-        const reqTask = req.body as Task
+        const reqTask = req.body as Task;
+        reqTask.userId = req.user.id;
         const task = await addNewTask(reqTask);
-        return res.status(HTTP_STATUS.CREATED).json(success(task, "Task added successfully"))
+        return res.status(HTTP_STATUS.OK).json(success(task, "Task added successfully"))
     } catch (err: any) {
         return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(failure(err.message))
     }
 }
 
 export const editTask = async (req: any, res: Response) => {
-    try { 
+    try {
         const reqTask = req.body as Task
-        const task = await editExistingTask(reqTask)
+        const userId = req.user.id;
+        const task = await editExistingTask(reqTask, userId)
         return res.status(HTTP_STATUS.OK).json(success(task, "Task edited successsfully"))
     } catch (err: any) {
+        if (err.message === 'Task not found!') return res.status(HTTP_STATUS.NOT_FOUND).json(failure(err.message))
+        if (err.message === 'Unauthorized!') return res.status(HTTP_STATUS.FORBIDDEN).json(failure(err.message))
         return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(failure(err.message))
     }
 }
 
-export const deleteTask = async (req: Request, res: Response) => {
+export const deleteTask = async (req: any, res: Response) => {
     try {
-        const taskIdStr = req.query.taskId
-        console.log(taskIdStr);
-        
-        const taskId = Number(taskIdStr)
-        await deleteExistingTask(taskId)
+        const taskId = Number(req.params.taskId)
+        if (isNaN(taskId)) {
+            return res.status(HTTP_STATUS.BAD_REQUEST).json(failure('Invalid task ID')) 
+        }
+        const userId = req.user.id;
+        await deleteExistingTask(taskId, userId)
         return res.status(HTTP_STATUS.OK).json(success({}, "Task Deleted Successfully"))
     } catch (err: any) {
+        if (err.message === 'Task not found!') return res.status(HTTP_STATUS.NOT_FOUND).json(failure(err.message))
+        if (err.message === 'Unauthorized!') return res.status(HTTP_STATUS.FORBIDDEN).json(failure(err.message))
         return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json(failure(err.message))
     }
 }

@@ -1,11 +1,11 @@
 import { z } from 'zod'
 
 export const taskSchema = z.object({
-    id: z.number(),
-    text: z.string().min(3, "Task Title should be atleast 3 charecter!"),
+    id: z.number().optional(),
+    text: z.string().min(2, "Task Title should be atleast 2 charecter!"),
     description: z.string(),
     isCompleted: z.boolean().optional(),
-    userId: z.number()
+    userId: z.number().optional()
 })
 
 export const loginSchema = z.object({

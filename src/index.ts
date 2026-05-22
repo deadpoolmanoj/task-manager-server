@@ -15,7 +15,7 @@ dotenv.config()
 
 const app = express();
 
-app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api/v1/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(
     cors({
@@ -34,6 +34,6 @@ app.use('/api/v1/tasks', authMiddleware, tasksRoutes)
 
 app.use('/api/v1/users', authMiddleware, usersRoutes)
 
-app.listen(process.env.PORT, () => {
+app.listen(Number(process.env.PORT), '0.0.0.0', () => {
     console.log(`Server running on http://localhost:${process.env.PORT}`);
 });

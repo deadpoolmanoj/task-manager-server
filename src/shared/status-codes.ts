@@ -20,3 +20,7 @@ export const HTTP_STATUS = {
   SERVICE_UNAVAILABLE: 503,
   GATEWAY_TIMEOUT: 504,
 } as const;
+
+export const UN_AUTHORIZED = 'Unauthorized!'
+export const NOT_FOUND = 'NotFound'
+export const USER_ALREADY_EXISTS = "User already Exists"
