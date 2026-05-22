@@ -32,7 +32,9 @@ To test authenticated routes in Swagger:
 
 ## Tech Stack
 
+
 ### Backend
+## Repo Link - https://github.com/deadpoolmanoj/task-manager-server.git
 - **Runtime**: Node.js with TypeScript
 - **Framework**: Express.js
 - **Database**: PostgreSQL via Supabase
@@ -46,6 +48,7 @@ To test authenticated routes in Swagger:
 - **CORS**: cors
 
 ### Frontend
+## repo link - https://github.com/deadpoolmanoj/task-manager-client.git
 - **Framework**: Next.js 
 - **Styling**: Tailwind CSS
 - **Components**: shadcn/ui
