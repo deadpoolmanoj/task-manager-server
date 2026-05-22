@@ -1,7 +1,5 @@
-import express, { text } from "express";
-import { login, register } from "./auth/controller";
+import express from "express";
 import cors from 'cors';
-import rateLimit from "express-rate-limit";
 import { authMiddleware } from "./middlewares/authentication";
 import authRoutes from './modules/auth/route'
 import tasksRoutes from './modules/tasks/route'
