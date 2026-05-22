@@ -2,7 +2,7 @@ import { supabase } from "../../config/supabase";
 import { Task } from "../../shared/types/task";
 import { sanitizeContent } from "../../utils/sanitize";
 
-const taskSelectionString = 'id, text, isCompleted : is_completed, description'
+const taskSelectionString = 'id, text, description'
 
 export const fetchAllTasks = async (userId: number) => {
     const { data, error } = await supabase
@@ -23,7 +23,7 @@ export const addNewTask = async (task: Task) => {
 
     const { data, error } = await supabase
         .from('Task')
-        .insert([{ text: cleanText, user_id: task.userId, is_completed: false, description: cleanDesc }])
+        .insert([{ text: cleanText, user_id: task.userId, description: cleanDesc }])
         .select(taskSelectionString)
         .single()
 
@@ -49,7 +49,7 @@ export const editExistingTask = async (task: Task, userId: number) => {
 
     const { data, error } = await supabase
         .from('Task')
-        .update({ text: cleanText, is_completed: task.isCompleted, description: cleanDesc })
+        .update({ text: cleanText, description: cleanDesc })
         .eq('id', task.id)
         .select(taskSelectionString)
         .maybeSingle()
