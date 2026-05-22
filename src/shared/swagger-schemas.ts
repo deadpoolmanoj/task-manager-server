@@ -45,9 +45,6 @@
  *         description:
  *           type: string
  *           example: From the supermarket
- *         isCompleted:
- *           type: boolean
- *           example: false
  *     TaskCreateInput:
  *       type: object
  *       required: [text]
@@ -71,9 +68,6 @@
  *         description:
  *           type: string
  *           example: From the supermarket
- *         isCompleted:
- *           type: boolean
- *           example: false
  */
 
 /**
