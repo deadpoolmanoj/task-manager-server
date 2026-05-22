@@ -13,5 +13,4 @@ export const userSchema = z.object({
             message: "Password must contain at least one number.",
         }),
     role: z.enum(['user', 'admin']),
-    adminId: z.number().nullable()
 })
